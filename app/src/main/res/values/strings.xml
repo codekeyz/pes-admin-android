@@ -45,6 +45,8 @@
     <string name="txt_manager_icon">Manager Icon</string>
     <string name="txt_choose_branch">Choose Branch</string>
     <string name="txt_set_branch">Set Branch</string>
+    <string name="txt_choose_day">Choose Day</string>
+    <string name="txt_add_new_day">Add New Day</string>
 
 
     <string-array name="months_array">
@@ -67,5 +69,14 @@
         <item>Week 2</item>
         <item>Week 3</item>
         <item>Week 4</item>
+    </string-array>
+
+
+    <string-array name="days_array">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
     </string-array>
 </resources>

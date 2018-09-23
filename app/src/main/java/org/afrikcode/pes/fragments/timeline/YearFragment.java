@@ -6,6 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +22,7 @@ import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
+import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
@@ -26,7 +31,7 @@ import org.afrikcode.pes.views.TimeStampView;
 import java.util.List;
 
 
-public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemClickListener<Year>, TimeStampView {
+public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemClickListener<Year>, TimeStampView, SearchView.OnQueryTextListener {
 
     private AlertDialog dialog = null;
     private YearAdapter mYearAdapter;
@@ -34,6 +39,20 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     public YearFragment() {
         setTitle("Select Year");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem search = menu.getItem(0);
+        search.setVisible(true);
+
+        HomeActivity activity = (HomeActivity) getContext();
+        activity.getSearchView().setQueryHint("Search Year...");
+
+        activity.getSearchView().setOnQueryTextListener(this);
+
     }
 
     @Override
@@ -47,6 +66,7 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
         setImpl(new TimelineImpl(branchID, branchName));
         getImpl().setView(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -171,15 +191,19 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     @Override
     public void onClick(Year data) {
-        if (getFragmentListener() != null) {
-            Bundle b = new Bundle();
-            b.putString("BranchID", branchID);
-            b.putString("BranchName", branchName);
-            b.putString("YearID", data.getId());
-            MonthFragment mf = new MonthFragment();
-            mf.setArguments(b);
+        if (data.isActive()) {
+            if (getFragmentListener() != null) {
+                Bundle b = new Bundle();
+                b.putString("BranchID", branchID);
+                b.putString("BranchName", branchName);
+                b.putString("YearID", data.getId());
+                MonthFragment mf = new MonthFragment();
+                mf.setArguments(b);
 
-            getFragmentListener().moveToFragment(mf);
+                getFragmentListener().moveToFragment(mf);
+            }
+        } else {
+            Toast.makeText(getContext(), data.getName() + " not activated,", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -195,6 +219,11 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
     }
 
     @Override
+    public void onDayAdded() {
+
+    }
+
+    @Override
     public void ongetMonthsinYear(List<Month> monthList) {
 
     }
@@ -204,5 +233,21 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     }
 
+    @Override
+    public void ongetDaysinWeek(List<Day> dayList) {
 
+    }
+
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mYearAdapter.getFilter().filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mYearAdapter.getFilter().filter(newText);
+        return false;
+    }
 }

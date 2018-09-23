@@ -24,4 +24,6 @@ public interface DatabaseContract {
 
     CollectionReference getWeeksReference();
 
+    CollectionReference getDaysReference();
+
 }

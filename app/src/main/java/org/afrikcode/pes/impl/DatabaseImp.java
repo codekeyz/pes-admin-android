@@ -70,4 +70,9 @@ public class DatabaseImp implements DatabaseContract {
     public CollectionReference getWeeksReference() {
         return firestoreDB.collection(Constants.WeekTimelineRef);
     }
+
+    @Override
+    public CollectionReference getDaysReference() {
+        return firestoreDB.collection(Constants.DayTimelineRef);
+    }
 }

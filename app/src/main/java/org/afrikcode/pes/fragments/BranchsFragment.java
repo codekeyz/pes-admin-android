@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,7 +30,8 @@ import org.afrikcode.pes.views.BranchView;
 import java.util.Date;
 import java.util.List;
 
-public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchView, OnitemClickListener<Branch> {
+
+public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchView, OnitemClickListener<Branch>, SearchView.OnQueryTextListener {
 
     private BranchAdapter adapter;
     private AlertDialog dialog;
@@ -44,6 +46,8 @@ public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchV
         setImpl(new BranchImpl());
         getImpl().setView(this);
         setHasOptionsMenu(true);
+
+        getMessagingImpl().subscribeTo(Channel.TRANSACTIONS_CHANNEL);
     }
 
     @Override
@@ -54,11 +58,9 @@ public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchV
         search.setVisible(true);
 
         HomeActivity activity = (HomeActivity) getContext();
-        activity.getSearchView().setIconified(false);
         activity.getSearchView().setQueryHint("Search branches...");
-        activity.getSearchView().onActionViewCollapsed();
 
-        getMessagingImpl().subscribeTo(Channel.TRANSACTIONS_CHANNEL);
+        activity.getSearchView().setOnQueryTextListener(this);
     }
 
     @Override
@@ -224,14 +226,30 @@ public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchV
 
     @Override
     public void onClick(Branch data) {
-        if (getFragmentListener() != null) {
-            Bundle b = new Bundle();
-            b.putString("BranchID", data.getBranchID());
-            b.putString("BranchName", data.getBranchName());
-            YearFragment yf = new YearFragment();
-            yf.setArguments(b);
+        if (data.isBranchActive()) {
+            if (getFragmentListener() != null) {
+                Bundle b = new Bundle();
+                b.putString("BranchID", data.getBranchID());
+                b.putString("BranchName", data.getBranchName());
+                YearFragment yf = new YearFragment();
+                yf.setArguments(b);
 
-            getFragmentListener().moveToFragment(yf);
+                getFragmentListener().moveToFragment(yf);
+            }
+        } else {
+            Toast.makeText(getContext(), data.getBranchName() + " is not activated", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        adapter.getFilter().filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.getFilter().filter(newText);
+        return false;
     }
 }

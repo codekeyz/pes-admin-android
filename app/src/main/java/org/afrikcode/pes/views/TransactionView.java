@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface TransactionView extends BaseView {
 
-    void onAddSuccess();
-
-    void onAddError();
-
     void ongetTransactions(List<Transaction> transactionList);
+
+    void onTransactionsEmpty();
 }

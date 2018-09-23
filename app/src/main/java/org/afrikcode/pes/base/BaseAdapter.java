@@ -3,6 +3,7 @@ package org.afrikcode.pes.base;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+import android.widget.Filterable;
 
 import org.afrikcode.pes.listeners.OnitemClickListener;
 
@@ -15,9 +16,10 @@ import java.util.List;
  * @param <P> - OnclickListener
  * @param <V> - ViewHolder
  */
-public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
+public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> implements Filterable {
 
     private List<T> itemList;
+    private List<T> filteredList;
     private P onclicklistener;
 
     public BaseAdapter() {
@@ -36,7 +38,7 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        return filteredList.size();
     }
 
     protected List<T> getItemList() {
@@ -45,6 +47,7 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
 
     public void setItemList(List<T> itemList) {
         this.itemList = itemList;
+        filteredList = itemList;
     }
 
     protected P getOnclicklistener() {
@@ -54,4 +57,14 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
     public void setOnclicklistener(P onclicklistener) {
         this.onclicklistener = onclicklistener;
     }
+
+    protected List<T> getFilteredList() {
+        return filteredList;
+    }
+
+    public void setFilteredList(List<T> filteredList) {
+        this.filteredList = filteredList;
+    }
+
+
 }

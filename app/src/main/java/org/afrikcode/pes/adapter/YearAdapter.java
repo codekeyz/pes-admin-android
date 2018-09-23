@@ -5,14 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Filter;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.base.BaseAdapter;
+import org.afrikcode.pes.base.BaseFilter;
 import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.viewholder.TimelineVH;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class YearAdapter extends BaseAdapter<Year, OnitemClickListener<Year>, TimelineVH> {
 
@@ -31,7 +36,7 @@ public class YearAdapter extends BaseAdapter<Year, OnitemClickListener<Year>, Ti
 
     @Override
     public void onBindViewHolder(@NonNull TimelineVH holder, int position) {
-        final Year year = getItemList().get(position);
+        final Year year = getFilteredList().get(position);
         holder.getName().setText(year.getName());
         holder.getTotalAmount().setText(String.valueOf(year.getTotalAmount()));
         holder.getSwitch().setChecked(year.isActive());
@@ -53,5 +58,32 @@ public class YearAdapter extends BaseAdapter<Year, OnitemClickListener<Year>, Ti
                 }
             });
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new BaseFilter<Year, YearAdapter>(this) {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String query = charSequence.toString();
+
+                List<Year> filtered = new ArrayList<>();
+
+                if (query.isEmpty()) {
+                    filtered = getItemList();
+                } else {
+                    for (Year b : getItemList()) {
+                        if (b.getName().toLowerCase().contains(query.toLowerCase())) {
+                            filtered.add(b);
+                        }
+                    }
+                }
+
+                Filter.FilterResults results = new Filter.FilterResults();
+                results.count = filtered.size();
+                results.values = filtered;
+                return results;
+            }
+        };
     }
 }

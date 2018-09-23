@@ -9,6 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.afrikcode.pes.R;
+import org.afrikcode.pes.activities.HomeActivity;
 import org.afrikcode.pes.adapter.ManagerAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.enums.BranchErrorType;
@@ -31,7 +36,7 @@ import org.afrikcode.pes.views.ManagerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagersFragment extends BaseFragment<ManagerImpl> implements ManagerView, OnitemClickListener<Manager>, BranchView, SetBranchForManagerListener {
+public class ManagersFragment extends BaseFragment<ManagerImpl> implements ManagerView, OnitemClickListener<Manager>, BranchView, SetBranchForManagerListener, SearchView.OnQueryTextListener {
 
     private ManagerAdapter managerAdapter;
     private BranchImpl branchImpl;
@@ -43,6 +48,19 @@ public class ManagersFragment extends BaseFragment<ManagerImpl> implements Manag
 
     public ManagersFragment() {
         setTitle("Available Managers");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem search = menu.getItem(0);
+        search.setVisible(true);
+
+        HomeActivity activity = (HomeActivity) getContext();
+        activity.getSearchView().setQueryHint("Search Managers...");
+
+        activity.getSearchView().setOnQueryTextListener(this);
     }
 
     @Override
@@ -279,4 +297,15 @@ public class ManagersFragment extends BaseFragment<ManagerImpl> implements Manag
     }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        managerAdapter.getFilter().filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        managerAdapter.getFilter().filter(newText);
+        return false;
+    }
 }

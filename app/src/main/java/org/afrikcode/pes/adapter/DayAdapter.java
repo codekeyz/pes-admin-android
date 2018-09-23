@@ -13,17 +13,17 @@ import org.afrikcode.pes.base.BaseFilter;
 import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
-import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.viewholder.TimelineVH;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonthAdapter extends BaseAdapter<Month, OnitemClickListener<Month>, TimelineVH> {
+public class DayAdapter extends BaseAdapter<Day, OnitemClickListener<Day>, TimelineVH> {
 
     private TimelineImpl timelineImpl;
 
-    public MonthAdapter(TimelineImpl timeline) {
+    public DayAdapter(TimelineImpl timeline) {
         this.timelineImpl = timeline;
     }
 
@@ -36,15 +36,16 @@ public class MonthAdapter extends BaseAdapter<Month, OnitemClickListener<Month>,
 
     @Override
     public void onBindViewHolder(@NonNull TimelineVH holder, int position) {
-        final Month month = getFilteredList().get(position);
-        holder.getName().setText(month.getName());
-        holder.getTotalAmount().setText(String.valueOf(month.getTotalAmount()));
-        holder.getSwitch().setChecked(month.isActive());
+        final Day day = getFilteredList().get(position);
+        holder.getName().setText(day.getName());
+        holder.getTotalAmount().setText(String.valueOf(day.getTotalAmount()));
+        holder.getSwitch().setChecked(day.isActive());
+
 
         holder.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
-                timelineImpl.setTimelineActiveStatus(month.getId(), TimestampType.MONTH, isActive);
+                timelineImpl.setTimelineActiveStatus(day.getId(), TimestampType.DAY, isActive);
             }
         });
 
@@ -53,7 +54,7 @@ public class MonthAdapter extends BaseAdapter<Month, OnitemClickListener<Month>,
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(month);
+                    getOnclicklistener().onClick(day);
                 }
             });
         }
@@ -61,17 +62,17 @@ public class MonthAdapter extends BaseAdapter<Month, OnitemClickListener<Month>,
 
     @Override
     public Filter getFilter() {
-        return new BaseFilter<Month, MonthAdapter>(this) {
+        return new BaseFilter<Day, DayAdapter>(this) {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String query = charSequence.toString();
 
-                List<Month> filtered = new ArrayList<>();
+                List<Day> filtered = new ArrayList<>();
 
                 if (query.isEmpty()) {
                     filtered = getItemList();
                 } else {
-                    for (Month b : getItemList()) {
+                    for (Day b : getItemList()) {
                         if (b.getName().toLowerCase().contains(query.toLowerCase())) {
                             filtered.add(b);
                         }

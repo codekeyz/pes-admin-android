@@ -15,5 +15,5 @@ public class Constants {
     public static final String YearTimelineRef = "years";
     public static final String MonthTimelineRef = "months";
     public static final String WeekTimelineRef = "weeks";
-
+    public static final String DayTimelineRef = "days";
 }

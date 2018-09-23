@@ -6,6 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,9 +21,9 @@ import org.afrikcode.pes.activities.HomeActivity;
 import org.afrikcode.pes.adapter.WeekAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
-import org.afrikcode.pes.fragments.ClientsFragment;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
+import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
@@ -29,7 +33,7 @@ import java.util.List;
 
 import butterknife.BindArray;
 
-public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemClickListener<Week>, TimeStampView {
+public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemClickListener<Week>, TimeStampView, SearchView.OnQueryTextListener {
 
     @BindArray(R.array.weeks_array)
     String[] weeks;
@@ -39,6 +43,20 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     public WeekFragment() {
         setTitle("Select Week");
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem search = menu.getItem(0);
+        search.setVisible(true);
+
+        HomeActivity activity = (HomeActivity) getContext();
+        activity.getSearchView().setQueryHint("Search Week...");
+
+        activity.getSearchView().setOnQueryTextListener(this);
+
     }
 
     @Override
@@ -55,6 +73,7 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
         setImpl(new TimelineImpl(branchID, branchName));
         getImpl().setView(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -129,6 +148,11 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
     }
 
     @Override
+    public void onDayAdded() {
+
+    }
+
+    @Override
     public void ongetWeeksinMonth(List<Week> weekList) {
         if (weekList.isEmpty()) {
             showErrorLayout("No weeks Added yet");
@@ -144,6 +168,11 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
         getInfoText().setText("Select week to view transactions made by current branch or add a new week.");
         getInfoText().setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void ongetDaysinWeek(List<Day> dayList) {
+
     }
 
     @Override
@@ -171,15 +200,20 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     @Override
     public void onClick(Week data) {
-        if (getFragmentListener() != null) {
-            Bundle b = new Bundle();
-            b.putString("BranchID", branchID);
-            b.putString("YearID", yearID);
-            b.putString("MonthID", data.getId());
-            b.putString("WeekID", data.getId());
-            ClientsFragment cf = new ClientsFragment();
-            cf.setArguments(b);
-            getFragmentListener().moveToFragment(cf);
+        if (data.isActive()) {
+            if (getFragmentListener() != null) {
+                Bundle b = new Bundle();
+                b.putString("BranchName", branchName);
+                b.putString("BranchID", branchID);
+                b.putString("YearID", yearID);
+                b.putString("MonthID", monthID);
+                b.putString("WeekID", data.getId());
+                DayFragment df = new DayFragment();
+                df.setArguments(b);
+                getFragmentListener().moveToFragment(df);
+            }
+        } else {
+            Toast.makeText(getContext(), data.getName() + " not activated,", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -206,4 +240,15 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        mWeekAdapter.getFilter().filter(query);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mWeekAdapter.getFilter().filter(newText);
+        return false;
+    }
 }

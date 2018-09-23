@@ -7,10 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
-import org.afrikcode.pes.R;
 import org.afrikcode.pes.adapter.ClientAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.impl.ClientImpl;
@@ -30,6 +27,7 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
     private String yearID;
     private String monthID;
     private String weekID;
+    private String dayID;
 
     public ClientsFragment() {
         setTitle("Clients in Branch");
@@ -39,7 +37,6 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if (getArguments() != null) {
             Bundle b = getArguments();
             branchName = b.getString("BranchName");
@@ -47,6 +44,7 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
             yearID = b.getString("YearID");
             monthID = b.getString("MonthID");
             weekID = b.getString("WeekID");
+            dayID = b.getString("DayID");
         }
 
         setImpl(new ClientImpl());
@@ -88,46 +86,6 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
     public void hideLoadingIndicator() {
         super.hideLoadingIndicator();
         getInfoText().setVisibility(View.GONE);
-    }
-
-    private void showAddClientDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-        View view = getLayoutInflater().inflate(R.layout.dialog_add_new_client_layout, null);
-
-        final EditText et_name = view.findViewById(R.id.et_client_name);
-        final EditText et_contact = view.findViewById(R.id.et_contact_number);
-        final EditText et_address = view.findViewById(R.id.et_residential_address);
-
-        Button cancel = view.findViewById(R.id.btn_cancel);
-        Button okay = view.findViewById(R.id.btn_submit);
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        okay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String branchName = et_name.getText().toString().trim();
-                String branchContact = et_contact.getText().toString().trim();
-                String branchAddress = et_address.getText().toString().trim();
-
-                Client c = new Client(branchName, branchContact, branchAddress, branchID);
-                getImpl().addClient(c);
-
-                dialog.dismiss();
-            }
-        });
-
-        dialog = builder.create();
-        dialog.setView(view);
-
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
     }
 
     @Override
