@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "229468349731",
+    "firebase_url": "https://pes-project.firebaseio.com",
+    "project_id": "pes-project",
+    "storage_bucket": "pes-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229468349731:android:fc716072dd18ea36",
+        "android_client_info": {
+          "package_name": "org.afrikcode.pes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229468349731-n4cqam2o297ed6605e46m05c2kpmqpp2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.afrikcode.pes",
+            "certificate_hash": "6bee2758d275c272b15956dc3489adf3d688c894"
+          }
+        },
+        {
+          "client_id": "229468349731-7n65n7j0acd04rlfrtoe9laj13l1n4kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLFgxu-75jWZAk5YxvCD-zOC9B3CpA8Ps"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229468349731-7n65n7j0acd04rlfrtoe9laj13l1n4kl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

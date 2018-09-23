@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">PES</string>
+    <string name="pes">Premium Technology Service</string>
+    <string name="logo">logo</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_center">Home</string>
+    <string name="activity_home">Select Year</string>
+    <string name="activity_transactions">Transactions</string>
+    <string name="txt_cedi_sign">GH¢</string>
+    <string name="txt_new_client_dil_hd">New Client</string>
+    <string name="txt_new_client_name_hint">New client\'s name</string>
+    <string name="txt_smart_card_number_hint">Smart card number</string>
+    <string name="txt_amount_paid_hint">Amount paid</string>
+    <string name="txt_contact_number_hint">Contact number</string>
+    <string name="txt_residential_address_hint">Residential address</string>
+    <string name="txt_cancel_btn">Cancel</string>
+    <string name="txt_submit_btn">Submit</string>
+    <string name="txt_tap_to_trans">Tap to edit transactions</string>
+    <string name="txt_statu_bagckround">statu bagckround</string>
+    <string name="txt_client_icon">Client Icon</string>
+    <string name="txt_sign_in_here">Sign In here</string>
+    <string name="txt_username_hint">Username</string>
+    <string name="txt_pin_hint">Pin</string>
+    <string name="txt_login_btn">LogIn</string>
+    <string name="txt_forgot_password_forgot">Forgot password?</string>
+    <string name="txt_add_new_year">Add New Year</string>
+    <string name="hint_enter_here">Enter here</string>
+    <string name="txt_btn_add_year">ADD</string>
+    <string name="txt_choose_month">Choose Month</string>
+    <string name="txt_add_new_month">Add New Month</string>
+    <string name="cancel">Cancel</string>
+    <string name="txt_add_new_week">Add New Week</string>
+    <string name="txt_choose_week">Choose week</string>
+    <string name="txt_new_branch">New Branch</string>
+    <string name="txt_branch_name">Branch Name</string>
+    <string name="txt_address">Address</string>
+    <string name="notification_channel_id">transactions</string>
+    <string name="action_search">Search</string>
+    <string name="txt_manager_icon">Manager Icon</string>
+    <string name="txt_choose_branch">Choose Branch</string>
+    <string name="txt_set_branch">Set Branch</string>
+
+
+    <string-array name="months_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string-array name="weeks_array">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+    </string-array>
+</resources>
