@@ -6,4 +6,6 @@ public interface AuthView extends BaseView {
     void onAuthSuccess(String userID);
 
     void onAuthError(String error);
+
+    void onRequestResetPassword();
 }

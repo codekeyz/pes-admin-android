@@ -10,6 +10,6 @@ public class PesApp extends Application {
     public void onCreate() {
         super.onCreate();
         DatabaseImp databaseImp = new DatabaseImp();
-        databaseImp.enableOfflinePersistence();
+        databaseImp.disableOfflinePersistence();
     }
 }

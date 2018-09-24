@@ -5,6 +5,8 @@ public interface AuthContract {
 
     void signupwithEmailandPassword(String email, String password);
 
+    void sendPasswordResetLink(String email);
+
     String getUserID();
 
     boolean isAuthenticated();

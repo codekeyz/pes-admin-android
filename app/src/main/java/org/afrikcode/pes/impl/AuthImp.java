@@ -14,7 +14,6 @@ import org.afrikcode.pes.views.AuthView;
 public class AuthImp extends BaseImp<AuthView> implements AuthContract {
 
     private FirebaseAuth mAuth;
-    private ManagerImpl manager;
 
     public AuthImp() {
         mAuth = FirebaseAuth.getInstance();
@@ -54,6 +53,22 @@ public class AuthImp extends BaseImp<AuthView> implements AuthContract {
 
     @Override
     public void signupwithEmailandPassword(String email, String password) {
+    }
+
+    @Override
+    public void sendPasswordResetLink(String email) {
+        getView().showLoadingIndicator();
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                getView().hideLoadingIndicator();
+                if (task.isSuccessful()) {
+                    getView().onRequestResetPassword();
+                } else {
+                    getView().onAuthError("Request password request failed, try again later");
+                }
+            }
+        });
     }
 
     @Override

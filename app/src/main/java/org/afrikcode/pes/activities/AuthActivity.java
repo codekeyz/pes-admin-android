@@ -55,7 +55,18 @@ public class AuthActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onRequestResetPassword() {
+                Toast.makeText(getApplicationContext(), "Password reset link has been sent to this email", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                setResult(RESULT_CANCELED, intent);
+                finish();
+            }
+
+            @Override
             public void showLoadingIndicator() {
+                et_username.setEnabled(false);
+                et_password.setEnabled(false);
                 txt_forget_pass.setClickable(false);
                 btn_login.setVisibility(View.INVISIBLE);
                 ln_loading.setVisibility(View.VISIBLE);
@@ -63,6 +74,8 @@ public class AuthActivity extends AppCompatActivity {
 
             @Override
             public void hideLoadingIndicator() {
+                et_username.setEnabled(true);
+                et_password.setEnabled(true);
                 txt_forget_pass.setClickable(true);
                 btn_login.setVisibility(View.VISIBLE);
                 ln_loading.setVisibility(View.GONE);
