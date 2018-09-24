@@ -1,37 +1,41 @@
 package org.afrikcode.pes.models;
 
-import com.google.firebase.firestore.PropertyName;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Admin {
 
-    @PropertyName("id")
     private String id;
 
-    @PropertyName("channels")
     private List<String> channelList;
 
     public Admin() {
     }
 
-    @PropertyName("id")
+    public Map<String, Object> datatoMap() {
+        Map<String, Object> data = new HashMap<>();
+        if (id != null) {
+            data.put("id", getId());
+        }
+        if (channelList != null) {
+            data.put("channelList", getChannelList());
+        }
+        return data;
+    }
+
     public String getId() {
         return id;
     }
 
-    @PropertyName("id")
     public void setId(String id) {
         this.id = id;
     }
 
-
-    @PropertyName("channels")
     public List<String> getChannelList() {
         return channelList;
     }
 
-    @PropertyName("channels")
     public void setChannelList(List<String> channelList) {
         this.channelList = channelList;
     }

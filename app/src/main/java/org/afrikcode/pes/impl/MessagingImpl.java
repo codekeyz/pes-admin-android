@@ -33,7 +33,7 @@ public class MessagingImpl implements MessagingContract {
         admin.setId(mFirebaseUser.getUid());
         admin.setChannelList(strings);
 
-        documentReference.set(admin);
+        documentReference.set(admin.datatoMap());
     }
 
     private String getChannel(Channel channel) {
