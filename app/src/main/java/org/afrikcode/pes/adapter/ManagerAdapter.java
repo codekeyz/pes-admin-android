@@ -43,6 +43,15 @@ public class ManagerAdapter extends BaseAdapter<Manager, OnitemClickListener<Man
     @Override
     public void onBindViewHolder(@NonNull ManagerVH holder, int position) {
         final Manager manager = getFilteredList().get(position);
+        if (manager.getBranchName() == null || manager.getBranchID() == null) {
+            holder.getManagerBranchText().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    setBranchForManagerListener.setBranchfor(manager.getUserID());
+                }
+            });
+        }
+
         holder.render(manager);
 
         if (getOnclicklistener() != null){
@@ -65,13 +74,6 @@ public class ManagerAdapter extends BaseAdapter<Manager, OnitemClickListener<Man
                     }
                 }
             });
-
-        holder.getManagerBranchText().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setBranchForManagerListener.setBranchfor(manager.getUserID());
-            }
-        });
     }
 
     @Override

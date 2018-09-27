@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.afrikcode.pes.R;
+import org.afrikcode.pes.Utils;
 import org.afrikcode.pes.impl.AuthImp;
 import org.afrikcode.pes.views.AuthView;
 
@@ -37,7 +38,7 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
-
+        final Utils utils = new Utils();
         authImp = new AuthImp();
         authImp.setView(new AuthView() {
             @Override
@@ -88,6 +89,26 @@ public class AuthActivity extends AppCompatActivity {
                 //Checking User inputs
                 String email = et_username.getText().toString().trim();
                 String password = et_password.getText().toString().trim();
+
+                if (email.isEmpty()) {
+                    et_username.setError("Email field cannot be empty");
+                    return;
+                }
+
+                if (!utils.isValidEmail(email)) {
+                    et_username.setError("Email entered is not valid");
+                    return;
+                }
+
+                if (password.isEmpty()) {
+                    et_password.setError("Password field cannot be empty");
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    et_password.setError("Password entered is too short");
+                    return;
+                }
 
                 authImp.loginwithEmailandPassword(email, password);
             }

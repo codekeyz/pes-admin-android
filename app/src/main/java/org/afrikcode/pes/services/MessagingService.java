@@ -18,6 +18,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
+import org.afrikcode.pes.impl.AuthImp;
 
 import java.util.Map;
 
@@ -26,11 +27,17 @@ public class MessagingService extends FirebaseMessagingService {
     private static final String CHANNEL_NAME = "pesmessaging";
     private static final String CHANNEL_DESC = "pesmessagingchannel";
     private int numMessages = 0;
+    private AuthImp authImp;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        sendNotification(remoteMessage.getData());
+        if (authImp == null) {
+            authImp = new AuthImp();
+        }
+        if (authImp.isAuthenticated()) {
+            sendNotification(remoteMessage.getData());
+        }
     }
 
     private void sendNotification(Map<String, String> data) {

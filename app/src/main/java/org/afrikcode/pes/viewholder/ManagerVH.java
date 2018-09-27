@@ -40,6 +40,7 @@ public class ManagerVH extends RecyclerView.ViewHolder{
         status.setChecked(manager.isAccountConfirmed());
         if (manager.getBranchName() != null || manager.getBranchID() != null){
             managerBranch.setText(manager.getBranchName());
+            managerBranch.setOnClickListener(null);
         }else {
             String text = "<b>No branch set. </b><font color=\"#e81d84\">Set a Branch Now</font>";
             managerBranch.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);

@@ -8,10 +8,13 @@ public class Transaction {
     private String uid;
     private String clientID;
     private String clientName;
+    private String clientTelephone;
     private String branchID;
     private String branchName;
     private String managerID;
     private double amount;
+
+    private String remarks;
 
     private String yearID;
     private String monthID;
@@ -22,7 +25,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(String clientName, String clientID, String branchName, String branchID, String managerID, double amount, String yearID, String monthID, String weekID, String dayID) {
+    public Transaction(String clientName, String clientID, String clientTelephone, String branchName, String branchID, String managerID, String remarks, double amount, String yearID, String monthID, String weekID, String dayID) {
         this.clientID = clientID;
         this.clientName = clientName;
         this.branchID = branchID;
@@ -33,6 +36,8 @@ public class Transaction {
         this.weekID = weekID;
         this.dayID = dayID;
         this.branchName = branchName;
+        this.remarks = remarks;
+        this.clientTelephone = clientTelephone;
     }
 
     public Map<String, Object> datatoMap() {
@@ -46,11 +51,17 @@ public class Transaction {
         if (clientName != null) {
             data.put("clientName", clientName);
         }
+        if (clientTelephone != null) {
+            data.put("clientTelephone", clientTelephone);
+        }
         if (branchID != null) {
             data.put("branchID", branchID);
         }
         if (managerID != null) {
             data.put("managerID", managerID);
+        }
+        if (remarks != null) {
+            data.put("remarks", remarks);
         }
 
         data.put("amount", amount);
@@ -84,8 +95,14 @@ public class Transaction {
         if (data.get("clientName") != null) {
             m.setClientName(data.get("clientName").toString());
         }
+        if (data.get("clientTelephone") != null) {
+            m.setClientTelephone(data.get("clientTelephone").toString());
+        }
         if (data.get("branchID") != null) {
             m.setBranchID(data.get("branchID").toString());
+        }
+        if (data.get("remarks") != null) {
+            m.setRemarks(data.get("remarks").toString());
         }
         if (data.get("managerID") != null) {
             m.setManagerID(data.get("managerID").toString());
@@ -114,6 +131,14 @@ public class Transaction {
             m.setCreatedAt(data.get("createdAt").toString());
         }
         return m;
+    }
+
+    public String getClientTelephone() {
+        return clientTelephone;
+    }
+
+    public void setClientTelephone(String clientTelephone) {
+        this.clientTelephone = clientTelephone;
     }
 
     public String getUid() {
@@ -210,5 +235,13 @@ public class Transaction {
 
     public void setDayID(String dayID) {
         this.dayID = dayID;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

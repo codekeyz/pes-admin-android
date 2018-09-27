@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
 import org.afrikcode.pes.adapter.TransactionAdapter;
 import org.afrikcode.pes.base.BaseFragment;
@@ -27,6 +31,7 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
 
     private TransactionAdapter mAdapter;
     private String yearID, monthID, weekID, dayID, branchID;
+    private AlertDialog dialog;
 
     public TransactionsFragment() {
         setTitle("Transactions");
@@ -48,7 +53,7 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
         search.setVisible(true);
 
         HomeActivity activity = (HomeActivity) getContext();
-        activity.getSearchView().setQueryHint("Search client transactions...");
+        activity.getSearchView().setQueryHint("Search manager transactions...");
 
         activity.getSearchView().setOnQueryTextListener(this);
     }
@@ -85,7 +90,6 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
         getImpl().getTransactions(branchID, yearID, monthID, weekID, dayID);
     }
 
-
     @Override
     public void showLoadingIndicator() {
         super.showLoadingIndicator();
@@ -100,7 +104,6 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
         getInfoText().setVisibility(View.GONE);
     }
 
-
     @Override
     public void ongetTransactions(List<Transaction> transactionList) {
         hideErrorLayout();
@@ -109,7 +112,7 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
         getRv_list().setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        getInfoText().setText("Select Transaction to view details or add a new transaction.");
+        getInfoText().setText("Select Transaction to view details.");
         getInfoText().setVisibility(View.VISIBLE);
     }
 
@@ -120,7 +123,52 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
 
     @Override
     public void onClick(Transaction data) {
-        Toast.makeText(getContext(), data.getClientName(), Toast.LENGTH_SHORT).show();
+        showTransaction(data);
+    }
+
+    private void showTransaction(Transaction data) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        HomeActivity activity = (HomeActivity) getContext();
+        View view = activity.getLayoutInflater().inflate(R.layout.trans_details_layout, null);
+
+        final TextView et_name = view.findViewById(R.id.et_client_name);
+        et_name.setText(data.getClientName());
+
+        final TextView et_amount = view.findViewById(R.id.et_amount);
+        et_amount.setText(getContext().getString(R.string.txt_cedi_sign).concat(String.valueOf(data.getAmount())));
+
+        final TextView et_telephone = view.findViewById(R.id.et_client_telephone);
+        et_telephone.setText(data.getClientTelephone());
+
+        final EditText et_remarks = view.findViewById(R.id.et_remark);
+        if (data.getRemarks() == null) {
+            et_remarks.setText("No remarks set");
+        } else {
+            et_remarks.setText(data.getRemarks());
+        }
+
+        final TextView et_timestamp = view.findViewById(R.id.et_timestamp);
+        et_timestamp.setText(data.getCreatedAt());
+
+        Button cancel = view.findViewById(R.id.btn_cancel);
+        cancel.setText("OKAY");
+        Button okay = view.findViewById(R.id.btn_submit);
+        okay.setVisibility(View.GONE);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog = builder.create();
+        dialog.setView(view);
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     @Override

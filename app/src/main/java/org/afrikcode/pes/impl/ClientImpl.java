@@ -78,7 +78,7 @@ public class ClientImpl extends BaseImp<ClientView> implements ClientContract {
                 if (task.isSuccessful()) {
                     getView().onAddClient();
                 } else {
-                    getView().onError("There was an error adding / updating client info");
+                    getView().onError("There was an error adding / updating manager info");
                 }
             }
         });

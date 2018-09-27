@@ -17,12 +17,12 @@
         <ImageView
             android:layout_alignParentStart="true"
             android:id="@+id/img_client_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:contentDescription="@string/txt_manager_icon"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/manager" />
 
         <LinearLayout
             android:layout_toStartOf="@+id/status_switch"

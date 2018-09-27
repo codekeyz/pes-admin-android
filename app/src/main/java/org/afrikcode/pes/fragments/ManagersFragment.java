@@ -24,6 +24,7 @@ import org.afrikcode.pes.activities.HomeActivity;
 import org.afrikcode.pes.adapter.ManagerAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.enums.BranchErrorType;
+import org.afrikcode.pes.enums.Channel;
 import org.afrikcode.pes.impl.BranchImpl;
 import org.afrikcode.pes.impl.ManagerImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
@@ -73,6 +74,8 @@ public class ManagersFragment extends BaseFragment<ManagerImpl> implements Manag
         managerImpl.setView(this);
         getImpl().setView(this);
         setHasOptionsMenu(true);
+
+        getMessagingImpl().subscribeTo(Channel.TRANSACTIONS_CHANNEL);
     }
 
     @Override
@@ -117,7 +120,14 @@ public class ManagersFragment extends BaseFragment<ManagerImpl> implements Manag
 
     @Override
     public void onClick(Manager data) {
-        Toast.makeText(getContext(), data.getUsername(), Toast.LENGTH_SHORT).show();
+        if (getFragmentListener() != null) {
+            Bundle b = new Bundle();
+            b.putString("BranchID", data.getBranchID());
+            ClientsFragment cf = new ClientsFragment();
+            cf.setArguments(b);
+
+            getFragmentListener().moveToFragment(cf);
+        }
     }
 
     @Override
@@ -135,15 +145,15 @@ public class ManagersFragment extends BaseFragment<ManagerImpl> implements Manag
         getRv_list().setAdapter(managerAdapter);
         managerAdapter.notifyDataSetChanged();
 
-        getInfoText().setText("Select Manager to set a branch, or enable or disable a manager");
+        getInfoText().setText("Select Manager to view his clients, or enable or disable a manager");
         getInfoText().setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onManagerStatusChange(boolean isActive) {
-        if (isActive){
+        if (isActive) {
             Toast.makeText(getContext(), "Manager Account is now activated", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(getContext(), "Manager Account is now deactivated", Toast.LENGTH_SHORT).show();
         }
     }

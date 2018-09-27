@@ -23,9 +23,11 @@ import android.widget.Toast;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.base.BaseFragment;
+import org.afrikcode.pes.enums.Channel;
 import org.afrikcode.pes.fragments.BranchsFragment;
 import org.afrikcode.pes.fragments.ManagersFragment;
 import org.afrikcode.pes.impl.AuthImp;
+import org.afrikcode.pes.impl.MessagingImpl;
 import org.afrikcode.pes.listeners.FragmentListener;
 
 import butterknife.BindView;
@@ -56,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         openDefaultFragment();
 
         authImp = new AuthImp();
+        new MessagingImpl().subscribeTo(Channel.TRANSACTIONS_CHANNEL);
     }
 
     private void openDefaultFragment() {

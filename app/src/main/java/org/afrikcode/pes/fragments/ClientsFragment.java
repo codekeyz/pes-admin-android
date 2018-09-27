@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -20,14 +19,8 @@ import java.util.List;
 public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientView, OnitemClickListener<Client> {
 
     private ClientAdapter adapter;
-    private AlertDialog dialog;
 
     private String branchID;
-    private String branchName;
-    private String yearID;
-    private String monthID;
-    private String weekID;
-    private String dayID;
 
     public ClientsFragment() {
         setTitle("Clients in Branch");
@@ -39,12 +32,7 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
 
         if (getArguments() != null) {
             Bundle b = getArguments();
-            branchName = b.getString("BranchName");
             branchID = b.getString("BranchID");
-            yearID = b.getString("YearID");
-            monthID = b.getString("MonthID");
-            weekID = b.getString("WeekID");
-            dayID = b.getString("DayID");
         }
 
         setImpl(new ClientImpl());
@@ -96,7 +84,7 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
         getRv_list().setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        getInfoText().setText("Select Client to view contributions made or add a new contribution.");
+        getInfoText().setText("Select Client to view contributions.");
         getInfoText().setVisibility(View.VISIBLE);
     }
 
