@@ -20,7 +20,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:contentDescription="@string/txt_client_icon"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/client" />
 
         <LinearLayout
             android:layout_width="wrap_content"

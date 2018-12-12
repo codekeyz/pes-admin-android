@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword 'Codemonster123'
-            storeFile file('/home/precious/Documents/Android Projects/PES/app/PESAdminKeystore.jks')
+            storeFile file('C:/Users/Hover Software Soln/Sofware Projects/Android/PES/app/PESAdminKeystore.jks')
             storePassword 'Codemonster123'
         }
     }
