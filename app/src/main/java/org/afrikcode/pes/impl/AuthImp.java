@@ -52,10 +52,6 @@ public class AuthImp extends BaseImp<AuthView> implements AuthContract {
     }
 
     @Override
-    public void signupwithEmailandPassword(String email, String password) {
-    }
-
-    @Override
     public void sendPasswordResetLink(String email) {
         getView().showLoadingIndicator();
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
