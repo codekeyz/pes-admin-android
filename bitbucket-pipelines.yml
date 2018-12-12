@@ -1,0 +1,14 @@
+# This is a sample build configuration for Java (Gradle).
+# Check our guides at https://confluence.atlassian.com/x/zd-5Mw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: mingc/android-build-box:latest
+pipelines:
+  default:
+    - step:
+        script:
+          - mkdir "${ANDROID_HOME}/licenses" || true
+          - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "${ANDROID_HOME}/licenses/android-sdk-license"
+          - chmod +x gradlew
+          - ./gradlew assembleDebug
