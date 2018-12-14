@@ -26,6 +26,7 @@ import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Service;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.views.TimeStampView;
@@ -113,6 +114,11 @@ public class DayFragment extends BaseFragment<TimelineImpl> implements OnitemCli
     }
 
     @Override
+    public void ongetServices(List<Service> serviceList) {
+
+    }
+
+    @Override
     public void ongetDaysinWeek(List<Day> dayList) {
         if (dayList.isEmpty()) {
             showErrorLayout("No Days Added yet");
@@ -174,6 +180,11 @@ public class DayFragment extends BaseFragment<TimelineImpl> implements OnitemCli
 
 
     //***************************** This callbacks won't work in this fragment *****************//
+
+    @Override
+    public void onServiceAdded() {
+
+    }
 
     @Override
     public void onYearAdded() {

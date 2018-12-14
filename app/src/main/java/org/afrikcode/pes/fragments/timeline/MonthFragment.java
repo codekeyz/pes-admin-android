@@ -25,6 +25,7 @@ import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Service;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.views.TimeStampView;
@@ -213,6 +214,11 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
     //********************************** This callbacks won't work here *********************//
 
     @Override
+    public void onServiceAdded() {
+
+    }
+
+    @Override
     public void onYearAdded() {
 
     }
@@ -224,6 +230,11 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
 
     @Override
     public void onDayAdded() {
+
+    }
+
+    @Override
+    public void ongetServices(List<Service> serviceList) {
 
     }
 
