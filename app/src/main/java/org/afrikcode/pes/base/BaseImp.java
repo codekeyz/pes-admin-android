@@ -1,6 +1,6 @@
 package org.afrikcode.pes.base;
 
-public abstract class BaseImp<T> {
+public abstract class BaseImp<T extends BaseView> {
 
     public T view;
 

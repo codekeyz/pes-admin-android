@@ -54,11 +54,11 @@ public class ManagerAdapter extends BaseAdapter<Manager, OnitemClickListener<Man
 
         holder.render(manager);
 
-        if (getOnclicklistener() != null){
+        if (getOnclick() != null){
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(manager);
+                    getOnclick().onClick(manager);
                 }
             });
         }

@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'key0'
             keyPassword 'Codemonster123'
-            storeFile file('C:/Users/Hover Software Soln/Sofware Projects/Android/PES/app/PESAdminKeystore.jks')
+            storeFile file('PESAdminKeystore.jks')
             storePassword 'Codemonster123'
         }
     }
@@ -36,9 +36,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.google.firebase:firebase-auth:11.8.0'
-    implementation 'com.google.firebase:firebase-firestore:11.8.0'
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-firestore:17.1.4'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

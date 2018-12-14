@@ -4,5 +4,5 @@ public enum TimestampType {
     YEAR,
     MONTH,
     WEEK,
-    DAY
+    DAY,
 }

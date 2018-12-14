@@ -49,12 +49,12 @@ public class WeekAdapter extends BaseAdapter<Week, OnitemClickListener<Week>, Ti
             }
         });
 
-        if (getOnclicklistener() != null) {
+        if (getOnclick() != null) {
             // handle click events;
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(week);
+                    getOnclick().onClick(week);
                 }
             });
         }

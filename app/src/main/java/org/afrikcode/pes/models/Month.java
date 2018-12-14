@@ -7,7 +7,6 @@ import java.util.Map;
 public class Month extends BaseTimeline<Month> {
 
     private String yearID;
-    private double totalAmount, totalTransactions;
 
     public Month() {
     }
@@ -37,21 +36,5 @@ public class Month extends BaseTimeline<Month> {
 
     public void setYearID(String yearID) {
         this.yearID = yearID;
-    }
-
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public double getTotalTransactions() {
-        return totalTransactions;
-    }
-
-    public void setTotalTransactions(double totalTransactions) {
-        this.totalTransactions = totalTransactions;
     }
 }

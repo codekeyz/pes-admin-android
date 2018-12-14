@@ -88,7 +88,7 @@ public class DayFragment extends BaseFragment<TimelineImpl> implements OnitemCli
         getRv_list().addItemDecoration(itemOffsetDecoration);
 
         mDayAdapter = new DayAdapter(getImpl());
-        mDayAdapter.setOnclicklistener(this);
+        mDayAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
             @Override

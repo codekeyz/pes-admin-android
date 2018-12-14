@@ -24,6 +24,7 @@ import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Service;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.views.TimeStampView;
@@ -35,7 +36,7 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     private AlertDialog dialog = null;
     private YearAdapter mYearAdapter;
-    private String branchID, branchName;
+    private String branchID, branchName, serviceID;
 
     public YearFragment() {
         setTitle("Select Year");
@@ -62,6 +63,7 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         if (this.getArguments() != null) {
             branchID = this.getArguments().getString("BranchID");
             branchName = this.getArguments().getString("BranchName");
+            serviceID  = this.getArguments().getString("ServiceID");
         }
 
         setImpl(new TimelineImpl(branchID, branchName));
@@ -80,7 +82,7 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         getRv_list().setHasFixedSize(true);
 
         mYearAdapter = new YearAdapter(getImpl());
-        mYearAdapter.setOnclicklistener(this);
+        mYearAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,11 +94,11 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         getSwipeRefresh().setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getImpl().getYears();
+                getImpl().getYears(serviceID);
             }
         });
 
-        getImpl().getYears();
+        getImpl().getYears(serviceID);
     }
 
     private void showAddYearDialog() {
@@ -119,12 +121,12 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String year = et_year.getText().toString().trim();
-                if (year.isEmpty()) {
+                String yearName = et_year.getText().toString().trim();
+                if (yearName.isEmpty()) {
                     Toast.makeText(getContext(), "All fields are required", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Year y = new Year(year);
+                Year y = new Year(yearName, serviceID);
                 getImpl().addYear(y);
 
                 dialog.dismiss();
@@ -154,7 +156,7 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         hideErrorLayout();
         getFab().setVisibility(View.VISIBLE);
 
-        // create adapter and pass data to it
+        // pass data to adapter
 
         mYearAdapter.setItemList(yearList);
 
@@ -209,6 +211,12 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     // ************************* This callbacks won't work here *******************//
     @Override
+    public void onServiceAdded() {
+
+    }
+
+
+    @Override
     public void onMonthAdded() {
 
     }
@@ -220,6 +228,11 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     @Override
     public void onDayAdded() {
+
+    }
+
+    @Override
+    public void ongetServices(List<Service> serviceList) {
 
     }
 

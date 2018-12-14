@@ -48,7 +48,7 @@ public class ClientsFragment extends BaseFragment<ClientImpl> implements ClientV
         getRv_list().setHasFixedSize(true);
 
         adapter = new ClientAdapter();
-        adapter.setOnclicklistener(this);
+        adapter.setOnclick(this);
 
         getFab().setVisibility(View.GONE);
 

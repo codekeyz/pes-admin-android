@@ -76,7 +76,7 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
         getRv_list().setHasFixedSize(true);
 
         mAdapter = new TransactionAdapter();
-        mAdapter.setOnclicklistener(this);
+        mAdapter.setOnclick(this);
 
         getFab().setVisibility(View.GONE);
 

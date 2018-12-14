@@ -85,7 +85,7 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
         getRv_list().addItemDecoration(itemOffsetDecoration);
 
         monthAdapter = new MonthAdapter(getImpl());
-        monthAdapter.setOnclicklistener(this);
+        monthAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
             @Override
