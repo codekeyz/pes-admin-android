@@ -51,9 +51,9 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
         return filteredList;
     }
 
-//    void setFilteredList(List<T> filteredList) {
-//        this.filteredList = filteredList;
-//    }
+    void setFilteredList(List<T> filteredList) {
+        this.filteredList = filteredList;
+    }
 
 
 }
