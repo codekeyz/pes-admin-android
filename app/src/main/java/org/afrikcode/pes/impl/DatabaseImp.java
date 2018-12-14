@@ -5,7 +5,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 import org.afrikcode.pes.Constants;
-import org.afrikcode.pes.contracts.DatabaseContract;
 
 public class DatabaseImp implements DatabaseContract {
 
@@ -75,4 +74,37 @@ public class DatabaseImp implements DatabaseContract {
     public CollectionReference getDaysReference() {
         return firestoreDB.collection(Constants.DayTimelineRef);
     }
+
+    @Override
+    public CollectionReference getServicesReference() {
+        return firestoreDB.collection(Constants.serviceRef);
+    }
+}
+
+interface DatabaseContract {
+
+    void enableOfflinePersistence();
+
+    void disableOfflinePersistence();
+
+    CollectionReference getManagersReference();
+
+    CollectionReference getAdministratorReference();
+
+    CollectionReference getBranchesReference();
+
+    CollectionReference getClientsReference();
+
+    CollectionReference getTransactionsReference();
+
+    CollectionReference getYearsReference();
+
+    CollectionReference getMonthsReference();
+
+    CollectionReference getWeeksReference();
+
+    CollectionReference getDaysReference();
+
+    CollectionReference getServicesReference();
+
 }

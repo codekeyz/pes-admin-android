@@ -3,11 +3,16 @@ package org.afrikcode.pes.base;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Data Model
+ * @param <T>
+ */
 public abstract class BaseTimeline<T> {
 
     private String id;
     private String name;
     private boolean isActive;
+    private double totalAmount;
 
     public BaseTimeline() {
     }
@@ -57,5 +62,13 @@ public abstract class BaseTimeline<T> {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 }

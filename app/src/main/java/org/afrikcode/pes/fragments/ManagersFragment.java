@@ -87,7 +87,7 @@ public class ManagersFragment extends BaseFragment<ManagerImpl> implements Manag
         getRv_list().setHasFixedSize(true);
 
         managerAdapter = new ManagerAdapter(getContext(), getImpl(), this);
-        managerAdapter.setOnclicklistener(this);
+        managerAdapter.setOnclick(this);
 
         branchList = new ArrayList<>();
         nameList = new ArrayList<>();

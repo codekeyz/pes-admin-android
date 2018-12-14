@@ -48,12 +48,12 @@ public class MonthAdapter extends BaseAdapter<Month, OnitemClickListener<Month>,
             }
         });
 
-        if (getOnclicklistener() != null) {
+        if (getOnclick() != null) {
             // handle click events;
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(month);
+                    getOnclick().onClick(month);
                 }
             });
         }

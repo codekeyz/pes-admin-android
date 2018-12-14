@@ -86,7 +86,7 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         getRv_list().addItemDecoration(itemOffsetDecoration);
 
         mWeekAdapter = new WeekAdapter(getImpl());
-        mWeekAdapter.setOnclicklistener(this);
+        mWeekAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
             @Override

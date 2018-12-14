@@ -49,12 +49,12 @@ public class YearAdapter extends BaseAdapter<Year, OnitemClickListener<Year>, Ti
             }
         });
 
-        if (getOnclicklistener() != null) {
+        if (getOnclick() != null) {
             //set listener
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(year);
+                    getOnclick().onClick(year);
                 }
             });
         }

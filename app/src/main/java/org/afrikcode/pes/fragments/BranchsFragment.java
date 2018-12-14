@@ -72,7 +72,7 @@ public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchV
         getRv_list().setHasFixedSize(true);
 
         adapter = new BranchAdapter(getContext(), getImpl());
-        adapter.setOnclicklistener(this);
+        adapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +231,7 @@ public class BranchsFragment extends BaseFragment<BranchImpl> implements BranchV
                 Bundle b = new Bundle();
                 b.putString("BranchID", data.getBranchID());
                 b.putString("BranchName", data.getBranchName());
-                YearFragment yf = new YearFragment();
+                ServicesFragment yf = new ServicesFragment();
                 yf.setArguments(b);
 
                 getFragmentListener().moveToFragment(yf);

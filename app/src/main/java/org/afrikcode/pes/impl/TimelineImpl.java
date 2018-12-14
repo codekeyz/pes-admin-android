@@ -17,6 +17,7 @@ import org.afrikcode.pes.contracts.TimeStampContract;
 import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Service;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.views.TimeStampView;
@@ -27,17 +28,33 @@ import java.util.Map;
 
 public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampContract {
 
-    private CollectionReference yearsRef, monthsRef, mWeeksRef, mdaysRef;
-    private String amountIndex, totalIndex;
+    private CollectionReference servicesRef, yearsRef, monthsRef, mWeeksRef, mdaysRef;
+    private String amountIndex;
 
     public TimelineImpl(String branchID, String branchName) {
         DatabaseImp databaseImp = new DatabaseImp();
+        servicesRef = databaseImp.getServicesReference();
         yearsRef = databaseImp.getYearsReference();
         monthsRef = databaseImp.getMonthsReference();
         mWeeksRef = databaseImp.getWeeksReference();
         mdaysRef = databaseImp.getDaysReference();
         amountIndex = branchID.concat(branchName).concat("Total");
-        totalIndex = branchID.concat(branchName).concat("Number");
+    }
+
+    @Override
+    public void addService(Service service) {
+        getView().showLoadingIndicator();
+        servicesRef.add(service.datatoMap()).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                getView().hideLoadingIndicator();
+                if (task.isSuccessful()){
+                    getView().onServiceAdded();
+                }else {
+                    getView().onError("Service could not be added, try again later");
+                }
+            }
+        });
     }
 
     @Override
@@ -105,9 +122,37 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
     }
 
     @Override
-    public void getYears() {
+    public void getServices() {
         getView().showLoadingIndicator();
-        yearsRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        servicesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                getView().hideLoadingIndicator();
+                List<Service> serviceList = new ArrayList<>();
+                for (DocumentSnapshot snapshot: documentSnapshots.getDocuments()) {
+                    Map<String, Object> data = snapshot.getData();
+
+                    Service service = new Service().maptoData(data);
+
+                    if (data.get(amountIndex) != null) {
+                        service.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
+                    } else {
+                        service.setTotalAmount(0.0);
+                    }
+
+                    service.setId(snapshot.getId());
+                    serviceList.add(service);
+                }
+
+                getView().ongetServices(serviceList);
+            }
+        });
+    }
+
+    @Override
+    public void getYears(String serviceID) {
+        getView().showLoadingIndicator();
+        yearsRef.whereEqualTo("serviceID", serviceID).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 getView().hideLoadingIndicator();
@@ -121,12 +166,6 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                         year.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
                     } else {
                         year.setTotalAmount(0.0);
-                    }
-
-                    if (data.get(totalIndex) != null) {
-                        year.setTotalTransactions(Double.valueOf(String.valueOf(data.get(totalIndex))));
-                    } else {
-                        year.setTotalTransactions(0);
                     }
 
                     year.setId(snapshot.getId());
@@ -158,12 +197,6 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                         month.setTotalAmount(0.0);
                     }
 
-                    if (data.get(totalIndex) != null) {
-                        month.setTotalTransactions(Double.valueOf(String.valueOf(data.get(totalIndex))));
-                    } else {
-                        month.setTotalTransactions(0);
-                    }
-
                     month.setId(snapshot.getId());
                     monthList.add(month);
                 }
@@ -190,12 +223,6 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                         week.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
                     } else {
                         week.setTotalAmount(0.0);
-                    }
-
-                    if (data.get(totalIndex) != null) {
-                        week.setTotalTransactions(Double.valueOf(String.valueOf(data.get(totalIndex))));
-                    } else {
-                        week.setTotalTransactions(0);
                     }
 
                     week.setId(snapshot.getId());
@@ -225,12 +252,6 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                         day.setTotalAmount(0.0);
                     }
 
-                    if (data.get(totalIndex) != null) {
-                        day.setTotalTransactions(Double.valueOf(String.valueOf(data.get(totalIndex))));
-                    } else {
-                        day.setTotalTransactions(0);
-                    }
-
                     day.setId(snapshot.getId());
                     dayList.add(day);
                 }
@@ -239,7 +260,6 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
             }
         });
     }
-
 
     @Override
     public void setTimelineActiveStatus(String id, TimestampType type, boolean isActive) {

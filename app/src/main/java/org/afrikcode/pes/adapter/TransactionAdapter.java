@@ -37,11 +37,11 @@ public class TransactionAdapter extends BaseAdapter<Transaction, OnitemClickList
             holder.date.setVisibility(View.GONE);
         }
 
-        if (getOnclicklistener() != null) {
+        if (getOnclick() != null) {
             holder.parentCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(transaction);
+                    getOnclick().onClick(transaction);
                 }
             });
         }

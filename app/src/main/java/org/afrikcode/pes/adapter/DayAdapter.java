@@ -49,12 +49,12 @@ public class DayAdapter extends BaseAdapter<Day, OnitemClickListener<Day>, Timel
             }
         });
 
-        if (getOnclicklistener() != null) {
+        if (getOnclick() != null) {
             // handle click events;
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(day);
+                    getOnclick().onClick(day);
                 }
             });
         }

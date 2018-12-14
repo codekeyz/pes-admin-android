@@ -4,6 +4,11 @@ import android.widget.Filter;
 
 import java.util.ArrayList;
 
+/***
+ *
+ * @param <D> Data Model
+ * @param <A> Adapter
+ */
 public abstract class BaseFilter<D, A extends BaseAdapter> extends Filter {
 
     private A adapter;
