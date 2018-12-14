@@ -42,11 +42,11 @@ public class BranchAdapter extends BaseAdapter<Branch, OnitemClickListener<Branc
 
         holder.render(b);
 
-        if (getOnclicklistener() != null) {
+        if (getOnclick() != null) {
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclicklistener().onClick(b);
+                    getOnclick().onClick(b);
                 }
             });
         }

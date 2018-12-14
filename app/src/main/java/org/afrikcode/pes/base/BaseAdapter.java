@@ -20,20 +20,9 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
 
     private List<T> itemList;
     private List<T> filteredList;
-    private P onclicklistener;
+    private P onclick;
 
     public BaseAdapter() {
-    }
-
-    @NonNull
-    @Override
-    public V onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull V holder, int position) {
-
     }
 
     @Override
@@ -50,21 +39,21 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
         filteredList = itemList;
     }
 
-    protected P getOnclicklistener() {
-        return onclicklistener;
+    protected P getOnclick() {
+        return onclick;
     }
 
-    public void setOnclicklistener(P onclicklistener) {
-        this.onclicklistener = onclicklistener;
+    public void setOnclick(P onclick) {
+        this.onclick = onclick;
     }
 
     protected List<T> getFilteredList() {
         return filteredList;
     }
 
-    public void setFilteredList(List<T> filteredList) {
-        this.filteredList = filteredList;
-    }
+//    void setFilteredList(List<T> filteredList) {
+//        this.filteredList = filteredList;
+//    }
 
 
 }
