@@ -1,8 +1,6 @@
 package org.afrikcode.pes.base;
 
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 import android.widget.Filterable;
 
 import org.afrikcode.pes.listeners.OnitemClickListener;
@@ -51,9 +49,8 @@ public abstract class BaseAdapter<T, P extends OnitemClickListener<T>, V extends
         return filteredList;
     }
 
-//    void setFilteredList(List<T> filteredList) {
-//        this.filteredList = filteredList;
-//    }
-
+    void setFilteredList(List<T> filteredList) {
+        this.filteredList = filteredList;
+    }
 
 }

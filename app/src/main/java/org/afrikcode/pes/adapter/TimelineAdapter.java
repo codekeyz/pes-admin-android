@@ -10,21 +10,27 @@ import android.widget.Filter;
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.base.BaseAdapter;
 import org.afrikcode.pes.base.BaseFilter;
+import org.afrikcode.pes.base.BaseTimeline;
 import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
-import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.viewholder.TimelineVH;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeekAdapter extends BaseAdapter<Week, OnitemClickListener<Week>, TimelineVH> {
+/***
+ * Data Model
+ * @param <T>
+ */
+public class TimelineAdapter<T extends BaseTimeline<T>> extends BaseAdapter<T, OnitemClickListener<T>, TimelineVH> {
 
     private TimelineImpl timelineImpl;
+    private TimestampType type;
 
-    public WeekAdapter(TimelineImpl timeline) {
+    public TimelineAdapter(TimelineImpl timeline, TimestampType type) {
         this.timelineImpl = timeline;
+        this.type = type;
     }
 
     @NonNull
@@ -36,16 +42,15 @@ public class WeekAdapter extends BaseAdapter<Week, OnitemClickListener<Week>, Ti
 
     @Override
     public void onBindViewHolder(@NonNull TimelineVH holder, int position) {
-        final Week week = getFilteredList().get(position);
-        holder.getName().setText(week.getName());
-        holder.getTotalAmount().setText(String.valueOf(week.getTotalAmount()));
-        holder.getSwitch().setChecked(week.isActive());
-
+        final T item = getFilteredList().get(position);
+        holder.getName().setText(item.getName());
+        holder.getTotalAmount().setText(String.valueOf(item.getTotalAmount()));
+        holder.getSwitch().setChecked(item.isActive());
 
         holder.getSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isActive) {
-                timelineImpl.setTimelineActiveStatus(week.getId(), TimestampType.WEEK, isActive);
+                timelineImpl.setTimelineActiveStatus(item.getId(), type, isActive);
             }
         });
 
@@ -54,7 +59,7 @@ public class WeekAdapter extends BaseAdapter<Week, OnitemClickListener<Week>, Ti
             holder.getParent().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    getOnclick().onClick(week);
+                    getOnclick().onClick(item);
                 }
             });
         }
@@ -62,17 +67,17 @@ public class WeekAdapter extends BaseAdapter<Week, OnitemClickListener<Week>, Ti
 
     @Override
     public Filter getFilter() {
-        return new BaseFilter<Week, WeekAdapter>(this) {
+        return new BaseFilter<T, TimelineAdapter>(this) {
             @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
+            protected Filter.FilterResults performFiltering(CharSequence charSequence) {
                 String query = charSequence.toString();
 
-                List<Week> filtered = new ArrayList<>();
+                List<T> filtered = new ArrayList<>();
 
                 if (query.isEmpty()) {
                     filtered = getItemList();
                 } else {
-                    for (Week b : getItemList()) {
+                    for (T b : getItemList()) {
                         if (b.getName().toLowerCase().contains(query.toLowerCase())) {
                             filtered.add(b);
                         }

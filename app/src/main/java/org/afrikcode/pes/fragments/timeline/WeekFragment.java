@@ -18,13 +18,15 @@ import android.widget.Toast;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
-import org.afrikcode.pes.adapter.WeekAdapter;
+import org.afrikcode.pes.adapter.TimelineAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
+import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Service;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.views.TimeStampView;
@@ -35,10 +37,9 @@ import butterknife.BindArray;
 
 public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemClickListener<Week>, TimeStampView, SearchView.OnQueryTextListener {
 
-    @BindArray(R.array.weeks_array)
-    String[] weeks;
+    @BindArray(R.array.weeks_array) String[] weeks;
     private AlertDialog dialog;
-    private WeekAdapter mWeekAdapter;
+    private TimelineAdapter<Week> mWeekAdapter;
     private String branchID, branchName, yearID, monthID;
 
     public WeekFragment() {
@@ -85,7 +86,7 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         ItemOffsetDecoration itemOffsetDecoration = new ItemOffsetDecoration(getContext(), R.dimen.recycler_grid_item_offset);
         getRv_list().addItemDecoration(itemOffsetDecoration);
 
-        mWeekAdapter = new WeekAdapter(getImpl());
+        mWeekAdapter = new TimelineAdapter<>(getImpl(), TimestampType.WEEK);
         mWeekAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
@@ -149,6 +150,11 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
     @Override
     public void onDayAdded() {
+
+    }
+
+    @Override
+    public void ongetServices(List<Service> serviceList) {
 
     }
 
@@ -219,6 +225,11 @@ public class WeekFragment extends BaseFragment<TimelineImpl> implements OnitemCl
 
 
     //***************************** This callbacks won't work in this fragment *****************//
+
+    @Override
+    public void onServiceAdded() {
+
+    }
 
     @Override
     public void onYearAdded() {
