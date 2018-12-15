@@ -284,6 +284,8 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
             return monthsRef;
         } else if (type == TimestampType.WEEK) {
             return mWeeksRef;
+        } else if (type == TimestampType.SERVICE) {
+            return servicesRef;
         } else {
             return mdaysRef;
         }

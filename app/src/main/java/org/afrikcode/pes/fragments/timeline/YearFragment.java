@@ -17,9 +17,10 @@ import android.widget.Toast;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
-import org.afrikcode.pes.adapter.YearAdapter;
+import org.afrikcode.pes.adapter.TimelineAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
+import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Day;
@@ -35,7 +36,7 @@ import java.util.List;
 public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemClickListener<Year>, TimeStampView, SearchView.OnQueryTextListener {
 
     private AlertDialog dialog = null;
-    private YearAdapter mYearAdapter;
+    private TimelineAdapter<Year> mYearAdapter;
     private String branchID, branchName, serviceID;
 
     public YearFragment() {
@@ -81,7 +82,7 @@ public class YearFragment extends BaseFragment<TimelineImpl> implements OnitemCl
         getRv_list().addItemDecoration(itemOffsetDecoration);
         getRv_list().setHasFixedSize(true);
 
-        mYearAdapter = new YearAdapter(getImpl());
+        mYearAdapter = new TimelineAdapter<>(getImpl(), TimestampType.YEAR);
         mYearAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {

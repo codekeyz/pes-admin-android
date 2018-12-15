@@ -18,13 +18,15 @@ import android.widget.Toast;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
-import org.afrikcode.pes.adapter.MonthAdapter;
+import org.afrikcode.pes.adapter.TimelineAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
+import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
 import org.afrikcode.pes.models.Day;
 import org.afrikcode.pes.models.Month;
+import org.afrikcode.pes.models.Service;
 import org.afrikcode.pes.models.Week;
 import org.afrikcode.pes.models.Year;
 import org.afrikcode.pes.views.TimeStampView;
@@ -39,7 +41,7 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
     String[] months;
     private AlertDialog dialog = null;
     private String branchID, branchName, yearID;
-    private MonthAdapter monthAdapter;
+    private TimelineAdapter<Month> monthAdapter;
 
     public MonthFragment() {
         setTitle("Select Month");
@@ -84,7 +86,7 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
         ItemOffsetDecoration itemOffsetDecoration = new ItemOffsetDecoration(getContext(), R.dimen.recycler_grid_item_offset);
         getRv_list().addItemDecoration(itemOffsetDecoration);
 
-        monthAdapter = new MonthAdapter(getImpl());
+        monthAdapter = new TimelineAdapter<>(getImpl(), TimestampType.MONTH);
         monthAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
@@ -213,6 +215,11 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
     //********************************** This callbacks won't work here *********************//
 
     @Override
+    public void onServiceAdded() {
+
+    }
+
+    @Override
     public void onYearAdded() {
 
     }
@@ -224,6 +231,11 @@ public class MonthFragment extends BaseFragment<TimelineImpl> implements OnitemC
 
     @Override
     public void onDayAdded() {
+
+    }
+
+    @Override
+    public void ongetServices(List<Service> serviceList) {
 
     }
 
