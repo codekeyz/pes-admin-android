@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
-import org.afrikcode.pes.adapter.ServiceAdapter;
+import org.afrikcode.pes.adapter.TimelineAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
 import org.afrikcode.pes.enums.Channel;
-import org.afrikcode.pes.fragments.timeline.MonthFragment;
+import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.fragments.timeline.YearFragment;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
@@ -34,7 +34,7 @@ import java.util.List;
 public class ServicesFragment extends BaseFragment<TimelineImpl> implements SearchView.OnQueryTextListener, OnitemClickListener<Service>,TimeStampView {
 
     private String branchID, branchName;
-    private ServiceAdapter mServiceAdapter;
+    private TimelineAdapter<Service> mServiceAdapter;
 
     public ServicesFragment() {
         setTitle("Available Services");
@@ -81,7 +81,7 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
         getRv_list().addItemDecoration(itemOffsetDecoration);
         getRv_list().setHasFixedSize(true);
 
-        mServiceAdapter = new ServiceAdapter();
+        mServiceAdapter = new TimelineAdapter<>(getImpl(), TimestampType.SERVICE);
         mServiceAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
@@ -133,9 +133,6 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
             Toast.makeText(getContext(), data.getName() + " not activated,", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 
     @Override
     public void showLoadingIndicator() {

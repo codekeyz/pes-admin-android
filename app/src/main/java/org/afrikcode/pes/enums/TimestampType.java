@@ -5,4 +5,5 @@ public enum TimestampType {
     MONTH,
     WEEK,
     DAY,
+    SERVICE
 }

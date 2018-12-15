@@ -18,9 +18,10 @@ import android.widget.Toast;
 
 import org.afrikcode.pes.R;
 import org.afrikcode.pes.activities.HomeActivity;
-import org.afrikcode.pes.adapter.DayAdapter;
+import org.afrikcode.pes.adapter.TimelineAdapter;
 import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.decorator.ItemOffsetDecoration;
+import org.afrikcode.pes.enums.TimestampType;
 import org.afrikcode.pes.fragments.TransactionsFragment;
 import org.afrikcode.pes.impl.TimelineImpl;
 import org.afrikcode.pes.listeners.OnitemClickListener;
@@ -40,7 +41,7 @@ public class DayFragment extends BaseFragment<TimelineImpl> implements OnitemCli
     @BindArray(R.array.days_array)
     String[] days;
     private AlertDialog dialog;
-    private DayAdapter mDayAdapter;
+    private TimelineAdapter<Day> mDayAdapter;
     private String branchID, branchName, yearID, monthID, weekID;
 
     public DayFragment() {
@@ -88,7 +89,7 @@ public class DayFragment extends BaseFragment<TimelineImpl> implements OnitemCli
         ItemOffsetDecoration itemOffsetDecoration = new ItemOffsetDecoration(getContext(), R.dimen.recycler_grid_item_offset);
         getRv_list().addItemDecoration(itemOffsetDecoration);
 
-        mDayAdapter = new DayAdapter(getImpl());
+        mDayAdapter = new TimelineAdapter<>(getImpl(), TimestampType.DAY);
         mDayAdapter.setOnclick(this);
 
         getFab().setOnClickListener(new View.OnClickListener() {
