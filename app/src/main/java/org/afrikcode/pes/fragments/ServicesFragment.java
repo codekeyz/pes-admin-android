@@ -60,7 +60,6 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
 
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
