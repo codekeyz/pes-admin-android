@@ -187,6 +187,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case "Available Managers":
                 navigationView.setCheckedItem(R.id.nav_managers);
                 break;
+            case "Available Services":
+                navigationView.setCheckedItem(R.id.nav_services);
+                break;
         }
     }
 
