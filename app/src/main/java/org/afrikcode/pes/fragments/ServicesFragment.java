@@ -1,15 +1,20 @@
 package org.afrikcode.pes.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.afrikcode.pes.R;
@@ -35,6 +40,7 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
 
     private String branchID, branchName;
     private TimelineAdapter<Service> mServiceAdapter;
+    private AlertDialog dialog;
 
     public ServicesFragment() {
         setTitle("Available Services");
@@ -102,6 +108,45 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
     }
 
     private void showAddServiceDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        HomeActivity homeActivity = (HomeActivity) getContext();
+        View view = homeActivity.getLayoutInflater().inflate(R.layout.dialog_add_new_year, null);
+
+        final EditText et_year = view.findViewById(R.id.et_year);
+        TextView title = view.findViewById(R.id.title);
+        title.setText(getString(R.string.add_service));
+
+        Button cancel = view.findViewById(R.id.btn_cancel);
+        Button okay = view.findViewById(R.id.btn_submit);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        okay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String serviceName = et_year.getText().toString().trim();
+                if (serviceName.isEmpty()) {
+                    Toast.makeText(getContext(), "All fields are required", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Service sv = new Service(serviceName);
+                getImpl().addService(sv);
+
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.create();
+        dialog.setView(view);
+
+        if (!dialog.isShowing()) {
+            dialog.show();
+        }
     }
 
     @Override
@@ -151,7 +196,7 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
 
     @Override
     public void onServiceAdded() {
-
+        Toast.makeText(getContext(), "Service has been successfully added", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -219,11 +264,11 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
 
     @Override
     public void onActivate(String msg) {
-
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onError(String error) {
-
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 }
