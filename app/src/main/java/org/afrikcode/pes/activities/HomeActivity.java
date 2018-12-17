@@ -26,6 +26,7 @@ import org.afrikcode.pes.base.BaseFragment;
 import org.afrikcode.pes.enums.Channel;
 import org.afrikcode.pes.fragments.BranchsFragment;
 import org.afrikcode.pes.fragments.ManagersFragment;
+import org.afrikcode.pes.fragments.ServicesFragment;
 import org.afrikcode.pes.impl.AuthImp;
 import org.afrikcode.pes.impl.MessagingImpl;
 import org.afrikcode.pes.listeners.FragmentListener;
@@ -126,6 +127,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_managers:
                 moveToFragment(new ManagersFragment());
+                break;
+            case R.id.nav_services:
+                moveToFragment(new ServicesFragment());
                 break;
             case R.id.nav_settings:
                 Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
