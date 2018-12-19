@@ -53,7 +53,7 @@ public class TransactionsFragment extends BaseFragment<TransactionImpl> implemen
         search.setVisible(true);
 
         HomeActivity activity = (HomeActivity) getContext();
-        activity.getSearchView().setQueryHint("Search manager transactions...");
+        activity.getSearchView().setQueryHint("Search transactions...");
 
         activity.getSearchView().setOnQueryTextListener(this);
     }

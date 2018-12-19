@@ -128,9 +128,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_managers:
                 moveToFragment(new ManagersFragment());
                 break;
-            case R.id.nav_services:
-                moveToFragment(new ServicesFragment());
-                break;
             case R.id.nav_settings:
                 Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
                 break;
@@ -186,9 +183,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case "Available Managers":
                 navigationView.setCheckedItem(R.id.nav_managers);
-                break;
-            case "Available Services":
-                navigationView.setCheckedItem(R.id.nav_services);
                 break;
         }
     }
