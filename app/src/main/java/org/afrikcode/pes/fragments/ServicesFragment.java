@@ -135,6 +135,8 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
                     return;
                 }
                 Service sv = new Service(serviceName);
+                sv.setBranchID(branchID);
+                sv.setBranchName(branchName);
                 getImpl().addService(sv);
 
                 dialog.dismiss();
