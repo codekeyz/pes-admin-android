@@ -110,11 +110,9 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         HomeActivity homeActivity = (HomeActivity) getContext();
-        View view = homeActivity.getLayoutInflater().inflate(R.layout.dialog_add_new_year, null);
+        View view = homeActivity.getLayoutInflater().inflate(R.layout.dialog_add_new_service, null);
 
         final EditText et_year = view.findViewById(R.id.et_year);
-        TextView title = view.findViewById(R.id.title);
-        title.setText(getString(R.string.add_service));
 
         Button cancel = view.findViewById(R.id.btn_cancel);
         Button okay = view.findViewById(R.id.btn_submit);

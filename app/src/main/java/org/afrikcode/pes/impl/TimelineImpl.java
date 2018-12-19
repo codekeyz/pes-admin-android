@@ -29,9 +29,11 @@ import java.util.Map;
 public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampContract {
 
     private CollectionReference servicesRef, yearsRef, monthsRef, mWeeksRef, mdaysRef;
-    private String amountIndex;
+    private String amountIndex, branchID, branchName;
 
     public TimelineImpl(String branchID, String branchName) {
+        this.branchID = branchID;
+        this.branchName = branchName;
         DatabaseImp databaseImp = new DatabaseImp();
         servicesRef = databaseImp.getServicesReference();
         yearsRef = databaseImp.getYearsReference();
@@ -124,7 +126,10 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
     @Override
     public void getServices() {
         getView().showLoadingIndicator();
-        servicesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        servicesRef
+                .whereEqualTo("branchID", branchID)
+                .whereEqualTo("branchName", branchName)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                 getView().hideLoadingIndicator();
