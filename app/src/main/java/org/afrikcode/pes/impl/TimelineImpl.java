@@ -29,7 +29,7 @@ import java.util.Map;
 public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampContract {
 
     private CollectionReference servicesRef, yearsRef, monthsRef, mWeeksRef, mdaysRef;
-    private String amountIndex;
+    private String amountIndex, branchID, branchName;
 
     public TimelineImpl(String branchID, String branchName) {
         DatabaseImp databaseImp = new DatabaseImp();
@@ -38,19 +38,23 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
         monthsRef = databaseImp.getMonthsReference();
         mWeeksRef = databaseImp.getWeeksReference();
         mdaysRef = databaseImp.getDaysReference();
+        this.branchID = branchID;
+        this.branchName = branchName;
         amountIndex = branchID.concat(branchName).concat("Total");
     }
 
     @Override
     public void addService(Service service) {
         getView().showLoadingIndicator();
+        service.setBranchID(branchID);
+        service.setBranchName(branchName);
         servicesRef.add(service.datatoMap()).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 getView().hideLoadingIndicator();
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     getView().onServiceAdded();
-                }else {
+                } else {
                     getView().onError("Service could not be added, try again later");
                 }
             }
@@ -124,29 +128,32 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
     @Override
     public void getServices() {
         getView().showLoadingIndicator();
-        servicesRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                getView().hideLoadingIndicator();
-                List<Service> serviceList = new ArrayList<>();
-                for (DocumentSnapshot snapshot: documentSnapshots.getDocuments()) {
-                    Map<String, Object> data = snapshot.getData();
+        servicesRef
+                .whereEqualTo("branchID", branchID)
+                .whereEqualTo("branchName", branchName)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                        getView().hideLoadingIndicator();
+                        List<Service> serviceList = new ArrayList<>();
+                        for (DocumentSnapshot snapshot : documentSnapshots.getDocuments()) {
+                            Map<String, Object> data = snapshot.getData();
 
-                    Service service = new Service().maptoData(data);
+                            Service service = new Service().maptoData(data);
 
-                    if (data.get(amountIndex) != null) {
-                        service.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
-                    } else {
-                        service.setTotalAmount(0.0);
+                            if (data.get(amountIndex) != null) {
+                                service.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
+                            } else {
+                                service.setTotalAmount(0.0);
+                            }
+
+                            service.setId(snapshot.getId());
+                            serviceList.add(service);
+                        }
+
+                        getView().ongetServices(serviceList);
                     }
-
-                    service.setId(snapshot.getId());
-                    serviceList.add(service);
-                }
-
-                getView().ongetServices(serviceList);
-            }
-        });
+                });
     }
 
     @Override

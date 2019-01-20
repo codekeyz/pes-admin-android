@@ -33,6 +33,7 @@ public abstract class BaseTimeline<T> {
             data.put("name", name);
         }
         data.put("isActive", isActive());
+        data.put("totalAmount", totalAmount);
         return data;
     }
 
