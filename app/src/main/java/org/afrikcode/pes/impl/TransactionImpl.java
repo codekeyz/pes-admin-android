@@ -24,11 +24,10 @@ public class TransactionImpl extends BaseImp<TransactionView> implements Transac
     }
 
     @Override
-    public void getTransactions(String branchID, String serviceID, String yearID, String monthID, String weekID, String dayID) {
+    public void getTransactions(String branchID, String yearID, String monthID, String weekID, String dayID) {
         getView().showLoadingIndicator();
         transactionsRef
                 .whereEqualTo("branchID", branchID)
-                .whereEqualTo("service", serviceID)
                 .whereEqualTo("year", yearID)
                 .whereEqualTo("month", monthID)
                 .whereEqualTo("week", weekID)
