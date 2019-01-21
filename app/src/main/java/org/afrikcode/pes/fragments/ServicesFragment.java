@@ -1,6 +1,5 @@
 package org.afrikcode.pes.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.afrikcode.pes.R;
@@ -112,7 +110,7 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
         HomeActivity homeActivity = (HomeActivity) getContext();
         View view = homeActivity.getLayoutInflater().inflate(R.layout.dialog_add_new_service, null);
 
-        final EditText et_year = view.findViewById(R.id.et_year);
+        final EditText et_service = view.findViewById(R.id.et_service);
 
         Button cancel = view.findViewById(R.id.btn_cancel);
         Button okay = view.findViewById(R.id.btn_submit);
@@ -127,14 +125,15 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serviceName = et_year.getText().toString().trim();
+                String serviceName = et_service.getText().toString().trim();
                 if (serviceName.isEmpty()) {
                     Toast.makeText(getContext(), "All fields are required", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Service sv = new Service(serviceName);
-                sv.setBranchID(branchID);
+
                 sv.setBranchName(branchName);
+                sv.setBranchID(branchID);
                 getImpl().addService(sv);
 
                 dialog.dismiss();

@@ -36,11 +36,6 @@ public class DatabaseImp implements DatabaseContract {
     }
 
     @Override
-    public CollectionReference getAdministratorReference() {
-        return firestoreDB.collection(Constants.AdministratorsRef);
-    }
-
-    @Override
     public CollectionReference getBranchesReference() {
         return firestoreDB.collection(Constants.BranchesRef);
     }
@@ -88,8 +83,6 @@ interface DatabaseContract {
     void disableOfflinePersistence();
 
     CollectionReference getManagersReference();
-
-    CollectionReference getAdministratorReference();
 
     CollectionReference getBranchesReference();
 

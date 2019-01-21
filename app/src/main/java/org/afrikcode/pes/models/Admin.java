@@ -1,14 +1,11 @@
 package org.afrikcode.pes.models;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Admin {
 
     private String id;
-
-    private List<String> channelList;
 
     public Admin() {
     }
@@ -17,9 +14,6 @@ public class Admin {
         Map<String, Object> data = new HashMap<>();
         if (id != null) {
             data.put("id", getId());
-        }
-        if (channelList != null) {
-            data.put("channelList", getChannelList());
         }
         return data;
     }
@@ -30,13 +24,5 @@ public class Admin {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public List<String> getChannelList() {
-        return channelList;
-    }
-
-    public void setChannelList(List<String> channelList) {
-        this.channelList = channelList;
     }
 }

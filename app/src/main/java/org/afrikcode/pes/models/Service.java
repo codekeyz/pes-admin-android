@@ -7,11 +7,9 @@ import java.util.Map;
 
 public class Service extends BaseTimeline<Service> {
 
-    private String branchID;
-    private String branchName;
+    private String branchID, branchName;
 
-    public Service() {
-    }
+    public Service() {}
 
     public Service(String name) {
         setName(name);
@@ -19,19 +17,24 @@ public class Service extends BaseTimeline<Service> {
 
     @Override
     public Map<String, Object> datatoMap() {
-        Map<String, Object> result = super.datatoMap();
-        result.put("branchID", branchID);
-        result.put("branchName", branchName);
-        return result;
+        Map<String, Object> data = super.datatoMap();
+        data.put("branchID", branchID);
+        data.put("branchName", branchName);
+        return data;
     }
 
     @Override
     public Service maptoData(Map<String, Object> data) {
-        Service m = new Service(data.get("name").toString());
-        m.setBranchID(data.get("branchID").toString());
-        m.setBranchName(data.get("branchName").toString());
-        m.setActive(Boolean.valueOf(data.get("isActive").toString()));
-        return m;
+        Service service = new Service(data.get("name").toString());
+        service.setBranchName(data.get("branchID").toString());
+        service.setBranchID(data.get("branchID").toString());
+
+        if (data.get("totalAmount") != null) {
+            service.setTotalAmount(Double.valueOf(data.get("totalAmount").toString()));
+        }
+
+        service.setActive(Boolean.valueOf(data.get("isActive").toString()));
+        return service;
     }
 
     public String getBranchID() {

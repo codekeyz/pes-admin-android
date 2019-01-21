@@ -16,6 +16,7 @@ public class Transaction {
 
     private String remarks;
 
+    private String serviceID;
     private String yearID;
     private String monthID;
     private String weekID;
@@ -23,21 +24,6 @@ public class Transaction {
     private String createdAt;
 
     public Transaction() {
-    }
-
-    public Transaction(String clientName, String clientID, String clientTelephone, String branchName, String branchID, String managerID, String remarks, double amount, String yearID, String monthID, String weekID, String dayID) {
-        this.clientID = clientID;
-        this.clientName = clientName;
-        this.branchID = branchID;
-        this.managerID = managerID;
-        this.amount = amount;
-        this.yearID = yearID;
-        this.monthID = monthID;
-        this.weekID = weekID;
-        this.dayID = dayID;
-        this.branchName = branchName;
-        this.remarks = remarks;
-        this.clientTelephone = clientTelephone;
     }
 
     public Map<String, Object> datatoMap() {
@@ -66,6 +52,9 @@ public class Transaction {
 
         data.put("amount", amount);
 
+        if (serviceID != null) {
+            data.put("serviceID", serviceID);
+        }
         if (yearID != null) {
             data.put("year", yearID);
         }
@@ -106,6 +95,9 @@ public class Transaction {
         }
         if (data.get("managerID") != null) {
             m.setManagerID(data.get("managerID").toString());
+        }
+        if (data.get("service") != null) {
+            m.setServiceID(data.get("service").toString());
         }
         if (data.get("year") != null) {
             m.setYearID(data.get("year").toString());
@@ -231,6 +223,14 @@ public class Transaction {
 
     public String getDayID() {
         return dayID;
+    }
+
+    public String getServiceID() {
+        return serviceID;
+    }
+
+    public void setServiceID(String serviceID) {
+        this.serviceID = serviceID;
     }
 
     public void setDayID(String dayID) {
