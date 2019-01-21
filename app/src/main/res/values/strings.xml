@@ -49,6 +49,7 @@
     <string name="txt_add_new_day">Add New Day</string>
     <string name="txt_contribution">Transaction Details</string>
     <string name="add_service">Add a Service</string>
+    <string name="txt_add_new_service">Add New Service</string>
 
 
     <string-array name="months_array">

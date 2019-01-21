@@ -110,11 +110,9 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         HomeActivity homeActivity = (HomeActivity) getContext();
-        View view = homeActivity.getLayoutInflater().inflate(R.layout.dialog_add_new_year, null);
+        View view = homeActivity.getLayoutInflater().inflate(R.layout.dialog_add_new_service, null);
 
-        final EditText et_year = view.findViewById(R.id.et_year);
-        TextView title = view.findViewById(R.id.title);
-        title.setText(getString(R.string.add_service));
+        final EditText et_service = view.findViewById(R.id.et_service);
 
         Button cancel = view.findViewById(R.id.btn_cancel);
         Button okay = view.findViewById(R.id.btn_submit);
@@ -129,7 +127,7 @@ public class ServicesFragment extends BaseFragment<TimelineImpl> implements Sear
         okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String serviceName = et_year.getText().toString().trim();
+                String serviceName = et_service.getText().toString().trim();
                 if (serviceName.isEmpty()) {
                     Toast.makeText(getContext(), "All fields are required", Toast.LENGTH_SHORT).show();
                     return;
