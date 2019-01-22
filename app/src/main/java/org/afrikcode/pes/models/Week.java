@@ -30,6 +30,11 @@ public class Week extends BaseTimeline<Week> {
     public Week maptoData(Map<String, Object> data) {
         Week w = new Week(data.get("name").toString(), data.get("yearID").toString(), data.get("monthID").toString());
         w.setActive(Boolean.valueOf(data.get("isActive").toString()));
+        if (data.get("totalAmount") != null) {
+            w.setTotalAmount(Double.valueOf(data.get("totalAmount").toString()));
+        }else {
+            w.setTotalAmount(0.0);
+        }
         return w;
     }
 

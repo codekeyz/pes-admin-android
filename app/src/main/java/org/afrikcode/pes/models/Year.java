@@ -20,6 +20,11 @@ public class Year extends BaseTimeline<Year> {
     public Year maptoData(Map<String, Object> data) {
         Year m = new Year(data.get("name").toString(), data.get("serviceID").toString());
         m.setActive(Boolean.valueOf(data.get("isActive").toString()));
+        if (data.get("totalAmount") != null) {
+            m.setTotalAmount(Double.valueOf(data.get("totalAmount").toString()));
+        }else {
+            m.setTotalAmount(0.0);
+        }
         return m;
     }
 
