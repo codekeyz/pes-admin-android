@@ -33,6 +33,11 @@ public class Day extends BaseTimeline<Day> {
     public Day maptoData(Map<String, Object> data) {
         Day d = new Day(data.get("name").toString(), data.get("yearID").toString(), data.get("monthID").toString(), data.get("weekID").toString());
         d.setActive(Boolean.valueOf(data.get("isActive").toString()));
+        if (data.get("totalAmount") != null) {
+            d.setTotalAmount(Double.valueOf(data.get("totalAmount").toString()));
+        }else {
+            d.setTotalAmount(0.0);
+        }
         return d;
     }
 

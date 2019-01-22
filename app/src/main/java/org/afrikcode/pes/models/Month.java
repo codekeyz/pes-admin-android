@@ -27,6 +27,11 @@ public class Month extends BaseTimeline<Month> {
     public Month maptoData(Map<String, Object> data) {
         Month m = new Month(data.get("name").toString(), data.get("yearID").toString());
         m.setActive(Boolean.valueOf(data.get("isActive").toString()));
+        if (data.get("totalAmount") != null) {
+            m.setTotalAmount(Double.valueOf(data.get("totalAmount").toString()));
+        }else {
+            m.setTotalAmount(0.0);
+        }
         return m;
     }
 

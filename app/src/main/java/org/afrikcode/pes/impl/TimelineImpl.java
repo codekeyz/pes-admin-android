@@ -137,16 +137,7 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                         getView().hideLoadingIndicator();
                         List<Service> serviceList = new ArrayList<>();
                         for (DocumentSnapshot snapshot : documentSnapshots.getDocuments()) {
-                            Map<String, Object> data = snapshot.getData();
-
-                            Service service = new Service().maptoData(data);
-
-                            if (data.get(amountIndex) != null) {
-                                service.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
-                            } else {
-                                service.setTotalAmount(0.0);
-                            }
-
+                            Service service = new Service().maptoData(snapshot.getData());
                             service.setId(snapshot.getId());
                             serviceList.add(service);
                         }
@@ -165,16 +156,7 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                 getView().hideLoadingIndicator();
                 List<Year> yearList = new ArrayList<>();
                 for (DocumentSnapshot snapshot : documentSnapshots.getDocuments()) {
-                    Map<String, Object> data = snapshot.getData();
-
-                    Year year = new Year().maptoData(data);
-
-                    if (data.get(amountIndex) != null) {
-                        year.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
-                    } else {
-                        year.setTotalAmount(0.0);
-                    }
-
+                    Year year = new Year().maptoData(snapshot.getData());
                     year.setId(snapshot.getId());
                     yearList.add(year);
                 }
@@ -193,17 +175,7 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                 getView().hideLoadingIndicator();
                 List<Month> monthList = new ArrayList<>();
                 for (DocumentSnapshot snapshot : documentSnapshots.getDocuments()) {
-                    Map<String, Object> data = snapshot.getData();
-                    Log.d("Message", data.toString());
-
-                    Month month = new Month().maptoData(data);
-
-                    if (data.get(amountIndex) != null) {
-                        month.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
-                    } else {
-                        month.setTotalAmount(0.0);
-                    }
-
+                    Month month = new Month().maptoData(snapshot.getData());
                     month.setId(snapshot.getId());
                     monthList.add(month);
                 }
@@ -222,16 +194,7 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                 getView().hideLoadingIndicator();
                 List<Week> weekList = new ArrayList<>();
                 for (DocumentSnapshot snapshot : documentSnapshots.getDocuments()) {
-                    Map<String, Object> data = snapshot.getData();
-                    Log.d("Message", data.toString());
-
-                    Week week = new Week().maptoData(data);
-                    if (data.get(amountIndex) != null) {
-                        week.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
-                    } else {
-                        week.setTotalAmount(0.0);
-                    }
-
+                    Week week = new Week().maptoData(snapshot.getData());
                     week.setId(snapshot.getId());
                     weekList.add(week);
                 }
@@ -250,15 +213,7 @@ public class TimelineImpl extends BaseImp<TimeStampView> implements TimeStampCon
                 getView().hideLoadingIndicator();
                 List<Day> dayList = new ArrayList<>();
                 for (DocumentSnapshot snapshot : documentSnapshots.getDocuments()) {
-                    Map<String, Object> data = snapshot.getData();
-
-                    Day day = new Day().maptoData(data);
-                    if (data.get(amountIndex) != null) {
-                        day.setTotalAmount(Double.valueOf(String.valueOf(data.get(amountIndex))));
-                    } else {
-                        day.setTotalAmount(0.0);
-                    }
-
+                    Day day = new Day().maptoData(snapshot.getData());
                     day.setId(snapshot.getId());
                     dayList.add(day);
                 }
