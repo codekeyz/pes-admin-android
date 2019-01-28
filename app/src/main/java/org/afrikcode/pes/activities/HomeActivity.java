@@ -137,6 +137,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_logout:
                 signout();
                 break;
+            default:
+                moveToFragment(new BranchsFragment());
+                break;
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
